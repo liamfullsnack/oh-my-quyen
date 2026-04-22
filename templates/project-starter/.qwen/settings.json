@@ -1,0 +1,43 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .qwen/hooks/session-init.cjs",
+            "timeout": 5000,
+            "description": "Inject project context at session start"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .qwen/hooks/dev-rules-reminder.cjs",
+            "timeout": 3000,
+            "description": "Remind model of YAGNI/KISS/DRY and path conventions"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "^(read_file|Read|ReadFile|view_file|cat)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node .qwen/hooks/privacy-block.cjs",
+            "timeout": 3000,
+            "description": "Block reads of sensitive files (.env, keys, credentials)"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "oh-my-quyen",
+  "version": "0.3.0",
+  "contextFileName": "QWEN.md",
+  "commands": "commands",
+  "agents": "agents",
+  "skills": "skills"
+}

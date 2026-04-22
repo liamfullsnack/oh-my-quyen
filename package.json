@@ -1,0 +1,56 @@
+{
+  "name": "oh-my-quyen",
+  "version": "0.3.0",
+  "description": "Qwen Code extension pack: 15 slash commands, 15 skills, 14 sub-agents, 3 hooks. Install with `omq init` or `qwen extensions install`.",
+  "bin": {
+    "omq": "bin/omq.js"
+  },
+  "main": "lib/index.js",
+  "files": [
+    "bin/",
+    "lib/",
+    "commands/",
+    "agents/",
+    "skills/",
+    "templates/project-starter/",
+    "qwen-extension.json",
+    "QWEN.md",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build:agents": "node scripts/convert-agents-to-qwen.js",
+    "build:commands": "node scripts/convert-skills-to-commands.js",
+    "build": "node scripts/build-templates.js && npm run build:agents && npm run build:commands",
+    "test": "node scripts/smoke-test.js"
+  },
+  "keywords": [
+    "qwen",
+    "qwen-code",
+    "qwen-extension",
+    "ai-agents",
+    "skills",
+    "slash-commands",
+    "cli",
+    "workflow"
+  ],
+  "author": "liam",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "peerDependencies": {
+    "@qwen-code/qwen-code": ">=0.14.0"
+  },
+  "peerDependenciesMeta": {
+    "@qwen-code/qwen-code": { "optional": true }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liamfullsnack/oh-my-quyen.git"
+  },
+  "bugs": {
+    "url": "https://github.com/liamfullsnack/oh-my-quyen/issues"
+  },
+  "homepage": "https://github.com/liamfullsnack/oh-my-quyen#readme"
+}
