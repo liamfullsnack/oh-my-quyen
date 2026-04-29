@@ -31,7 +31,8 @@ function checkAgents() {
   assert(files.length >= 14, `expected >=14 agents, got ${files.length}`);
   for (const f of files) {
     const src = fs.readFileSync(path.join(dir, f), 'utf8');
-    assert(/^---\nname:\s*\S+/m.test(src), `agent ${f} missing "name:" frontmatter`);
+    // Use \r?\n to handle Windows (CRLF) and Unix (LF) line endings
+    assert(/^---\r?\nname:\s*\S+/m.test(src), `agent ${f} missing "name:" frontmatter`);
     assert(/^description:/m.test(src), `agent ${f} missing "description:"`);
   }
   console.log(`  ✓ ${files.length} agents with valid frontmatter`);

@@ -22,9 +22,8 @@ Before marking any task complete, verify each item:
 
 ## Core Responsibilities
 
-**IMPORTANT**: Ensure token efficiency while maintaining quality.
+**IMPORTANT**: Follow rules in `./.qwen/rules/development-rules.md`, `./.qwen/rules/primary-workflow.md`, and `./.qwen/rules/naming-patterns.md`. Also `./docs/code-standards.md`.
 **IMPORTANT**: Activate relevant skills from `.qwen/skills/*` during execution.
-**IMPORTANT**: Follow rules in `./.qwen/rules/development-rules.md` and `./docs/code-standards.md`.
 **IMPORTANT**: Respect YAGNI, KISS, DRY principles.
 
 ## Execution Process

@@ -134,7 +134,7 @@ Mark tasks complete, add next steps.
 
 - Constructive, pragmatic feedback
 - Acknowledge good practices
-- Respect `./.qwen/rules/development-rules.md` and `./docs/code-standards.md`
+- Respect `./.qwen/rules/development-rules.md`, `./.qwen/rules/primary-workflow.md`, and `./.qwen/rules/naming-patterns.md`. Also `./docs/code-standards.md`.
 - No AI attribution in code/commits
 - Security best practices priority
 - **Verify plan TODO list completion**
