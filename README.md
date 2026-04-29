@@ -6,7 +6,7 @@ straight from GitHub.
 
 ---
 
-## Install (tell Qwen, or tell any coding agent)
+## Install
 
 > If you are a coding agent (Qwen/Claude/Gemini/Copilot) and the user asked
 > you to install oh-my-quyen from this repo, **follow the steps below verbatim**.
@@ -29,7 +29,7 @@ qwen extensions list
 # expect: ✓ oh-my-quyen (0.3.0)
 ```
 
-### Full install — also seed project-starter (docs/, plans/, .qwen/hooks/)
+### Full install — also seed project-starter (docs/, plans/, .qwen/hooks/, .qwen/rules/)
 
 Run this **in the project directory** you want scaffolded:
 
@@ -37,16 +37,29 @@ Run this **in the project directory** you want scaffolded:
 # 1. install the omq helper (no npm publish — clones from GitHub)
 npm install -g github:liamfullsnack/oh-my-quyen
 
-# 2. install extension + seed project-starter into cwd
-omq init --yes
+# 2. install extension + seed project-starter into target dir
+omq init --yes --target <your-project-dir>
 ```
 
 After `omq init`:
 - Extension linked globally with Qwen (`qwen extensions list` shows oh-my-quyen)
 - `./docs/` populated with stub markdown (project-overview-pdr, code-standards, etc.)
-- `./plans/templates/` populated with plan templates
+- `./plans/` directory created for plan files
 - `./.qwen/hooks/` populated with 3 runtime hooks
+- `./.qwen/rules/` populated with development-rules, primary-workflow, naming-patterns
 - `./.qwen/settings.json` wires the hooks into Qwen's event loop
+
+#### Windows notes
+
+- The `qwen` CLI ships as `qwen.cmd`. If `omq` reports "qwen CLI not found on PATH",
+  reopen your terminal or refresh PATH:
+  ```powershell
+  $env:PATH = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+  ```
+- Or run `omq init` with `--dry-run` first to verify it can find the CLI:
+  ```powershell
+  omq init --yes --dry-run --target <your-project-dir>
+  ```
 
 ### Pinning to a version
 
@@ -61,8 +74,9 @@ npm install -g github:liamfullsnack/oh-my-quyen#v0.3.0
 ```sh
 qwen extensions uninstall oh-my-quyen     # removes the extension
 npm uninstall -g oh-my-quyen              # removes the omq helper
-# remove seeded files manually if you ran `omq init`:
-rm -rf .qwen docs/project-overview-pdr.md ...
+# remove seeded files manually (adjust for your platform):
+# macOS/Linux:  rm -rf .qwen docs
+# Windows:      rmdir /s /q .qwen; Remove-Item -Recurse -Force docs
 ```
 
 ---
@@ -70,7 +84,7 @@ rm -rf .qwen docs/project-overview-pdr.md ...
 ## Agent install instructions (verbatim script)
 
 If you are an agent and the user said *"follow the oh-my-quyen README and install"*,
-execute exactly this:
+execute exactly this (cross-platform):
 
 ```sh
 set -e
@@ -82,8 +96,13 @@ command -v qwen >/dev/null || { echo "qwen CLI missing — install @qwen-code/qw
 qwen extensions uninstall oh-my-quyen 2>/dev/null || true
 echo y | qwen extensions install https://github.com/liamfullsnack/oh-my-quyen
 
-# 3. Verify registration
-qwen extensions list | grep -q "oh-my-quyen" || { echo "install failed"; exit 1; }
+# 3. Verify registration (cross-platform)
+if qwen extensions list | grep -q "oh-my-quyen" 2>/dev/null; then
+  : # ok
+else
+  # Windows / fallback
+  qwen extensions list | findstr /i "oh-my-quyen" >/dev/null 2>&1 || { echo "install failed"; exit 1; }
+fi
 
 # 4. (Optional — only if user asked for project scaffolding)
 #    npm install -g github:liamfullsnack/oh-my-quyen && omq init --yes
@@ -128,6 +147,14 @@ Invoke by name or let Qwen auto-route from the agent's `description`.
 | `SessionStart` | `session-init.cjs` | Inject project context (stack, paths, naming) |
 | `UserPromptSubmit` | `dev-rules-reminder.cjs` | Remind model of YAGNI/KISS/DRY + conventions |
 | `PreToolUse` | `privacy-block.cjs` | Block reads of `.env`, keys, credentials |
+
+### Rules (3, seeded by `omq init`)
+
+| File | Purpose |
+|---|---|
+| `development-rules.md` | YAGNI/KISS/DRY, workflow steps, naming conventions, commit rules |
+| `primary-workflow.md` | Decision tree, blocking gates, finalize checklist |
+| `naming-patterns.md` | File/dir naming, plan/report naming, commit message format |
 
 ### Context file
 
